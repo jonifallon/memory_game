@@ -39,11 +39,18 @@ checkForMatch = function(){
 	  else {
 	  	alert("Sorry, try again.")
 	  }
+
 }
 
-//steps when user flips a card
-var flipCard = function(cardId) {
+reload = function(){
+	 location.reload();
 
+};
+
+//steps when user flips a card
+var flipCard = function() {
+
+  var cardId = this.getAttribute('data-id');
   //variable to represent first card flipped
   var cardOne = cards[0];
 
@@ -54,8 +61,9 @@ var flipCard = function(cardId) {
   //see card images & suits that are flipped
   console.log(cards[cardId].cardImage);
   console.log(cards[cardId].suit);
-  
   cardsInPlay.push(cards[cardId].rank);
+
+  this.setAttribute('src', (cards[cardId].cardImage));
   
   if (cardsInPlay.length === 2) {
 	checkForMatch();
@@ -64,12 +72,19 @@ var flipCard = function(cardId) {
   }
 }
 
-flipCard(0);
-flipCard(2);
+var createBoard = function() {
+for (var i = 0; i < cards.length; i++) {
+	var cardElement = document.createElement('img');
+	cardElement.setAttribute('src', 'images/back.png');
+	cardElement.setAttribute('data-id', i);
+//addEventListener() method to add a click event to the cardElement
+//run flipCard function when uer clicks on a card
+	cardElement.addEventListener('click', flipCard);
+	document.getElementById('game-board').appendChild(cardElement);
 
 
 
+  }
+};
 
-
-
-
+createBoard();
